@@ -1,8 +1,7 @@
 #
-# Poseidon Project GrovePi Lesson 1
+# Poseidon Project GrovePi
 # 
-#	Read the data from Soil-Moisture sensor
-# 	Start and close a water pump
+#	Tester for the Water Flow when pumping. 
 #
 #	Loop every X minutes, to see whether the water is still above the treshold
 #
