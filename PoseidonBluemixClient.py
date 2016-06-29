@@ -13,6 +13,12 @@ import grovepi
 import subprocess
 import math
 
+#import our own config
+import config
+
+#import ibm iot foundation
+import ibmiotf.device
+
 #analog sensor port number
 moisture_sensor			= 1  # moisture-sensor op grovepi A1
 pompPin = 3   				 # pomp-relais op grovepi D3
@@ -27,12 +33,24 @@ moistureTreshold=40.0 #water if lower than 40%
 readingIntervalMinutes=15 #number of minutes between readings
 wateringTimeSeconds=1 #number of seconds the plant should be watered if the treshold is low. 
 
+#init the iot foundation
+if config.sendToIOTF == True:
+	deviceOptions = {
+		"org": config.iotfCredentials["organization"], 
+		"type": config.iotfCredentials["deviceType"],
+		"id": config.iotfCredentials["deviceId"],
+		"auth-method": config.iotfCredentials["authMethod"],
+		"auth-token": config.iotfCredentials["authToken"]
+	}
+	deviceCli = ibmiotf.device.Client(deviceOptions)
+	deviceCli.connect()
 
 def activateWater():
 	grovepi.digitalWrite(pompPin, 1)
 
 def passivateWater():
     grovepi.digitalWrite(pompPin, 0)
+
 
 def waterPlant():
 	#Start Flow meter
@@ -47,6 +65,7 @@ def waterPlant():
 	print(new_val)
 	print(flow_val)
 	grovepi.flowDisable()
+	deviceCli.publishEvent("watered", "json", {"flow":flow_val}, qos=0);
 
 
 def readMoisture():
@@ -54,6 +73,8 @@ def readMoisture():
 	print "Moisture " + str(moisture)
 	moisturePercentage = (moistureDry-moisture)/(moistureDry-moistureWet)*100
 	print "Moisture Percentage " + str(moisturePercentage)
+	deviceCli.publishEvent("moisture", "json", {"moistureperc":moisturePercentage, "moisture":moisture}, qos=0);
+
 	return moisturePercentage
 
 try:
