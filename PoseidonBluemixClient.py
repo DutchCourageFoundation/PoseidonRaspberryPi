@@ -90,3 +90,4 @@ finally:
 	print "shutting down pump" #make sure the pump is closed when something crashes
 	passivateWater()
 	grovepi.flowDisable()
+	deviceCli.disconnect()
