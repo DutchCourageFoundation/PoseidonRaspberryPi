@@ -33,6 +33,7 @@ sendAfterReconnect = True
 
 #Settings for the mqtt client
 iotfCredentials = dict(
+	plantName = [YOUR PLANT NAME]
 	organization = [ORG HERE],
 	deviceType = "PoseidonPlant",
 	deviceId = [DEVICE ID HERE],
