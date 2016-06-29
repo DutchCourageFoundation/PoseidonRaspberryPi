@@ -31,9 +31,11 @@ sendToIOTF = True
 #Send the collected sensor data to the broker after a reconnect?
 sendAfterReconnect = True
 
+plantName = [YOUR PLANT NAME]
+
+
 #Settings for the mqtt client
 iotfCredentials = dict(
-	plantName = [YOUR PLANT NAME]
 	organization = [ORG HERE],
 	deviceType = "PoseidonPlant",
 	deviceId = [DEVICE ID HERE],

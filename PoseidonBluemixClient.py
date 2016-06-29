@@ -65,7 +65,7 @@ def waterPlant():
 	print(new_val)
 	print(flow_val)
 	grovepi.flowDisable()
-	deviceCli.publishEvent("watered", "json", {"flow":flow_val}, qos=0);
+	deviceCli.publishEvent("watered", "json", {"name": config.plantName, "flow":flow_val}, qos=0);
 
 
 def readMoisture():
@@ -73,7 +73,7 @@ def readMoisture():
 	print "Moisture " + str(moisture)
 	moisturePercentage = (moistureDry-moisture)/(moistureDry-moistureWet)*100
 	print "Moisture Percentage " + str(moisturePercentage)
-	deviceCli.publishEvent("moisture", "json", {"moistureperc":moisturePercentage, "moisture":moisture}, qos=0);
+	deviceCli.publishEvent("moisture", "json", {"name": config.plantName, "moistureperc":moisturePercentage, "moisture":moisture}, qos=0);
 
 	return moisturePercentage
 
